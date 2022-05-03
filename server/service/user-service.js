@@ -11,6 +11,7 @@ class UserService {
       const hashPssword = await bcrypt.hash(password, 4);
       const activtionLink = uuid.v4()
       const user = await UserModel.create({email, hashPssword, activtionLink})
+      await mailService.sendActivationMail(email, activtionLink)  //////////////////
     }
 }
 
