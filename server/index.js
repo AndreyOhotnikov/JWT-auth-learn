@@ -5,10 +5,14 @@ const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose')
 const PORT = process.env.PORT || 5000;
 const app = express();
+const router = require('./router/index');
+const { populate } = require('./models/user-model');
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
+
+app.use('/api', router)
 
 const start = async () => {
     try {
