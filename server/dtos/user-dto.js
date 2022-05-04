@@ -1,4 +1,4 @@
-module.xports = class UserDto {
+module.exports = class UserDto {
   email;
   id;
   isActivated;
