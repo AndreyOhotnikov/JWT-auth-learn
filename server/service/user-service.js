@@ -7,7 +7,6 @@ const uuid = require('uuid')
 
 class UserService {
     async registration (email, password) {
-      console.log('333333333333333333333333333333333')
       const candidate = await UserModel.findOne({email})
       if (candidate) {
         throw new Error(`Пользователь с таким email: ${email} уже существует`)
@@ -17,7 +16,7 @@ class UserService {
       const activtionLink = uuid.v4()
 
       const user = await UserModel.create({email, password: hashPssword, activtionLink})
-      await mailService.sendActivationMail(email, activtionLink)  //////////////////
+      await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activtionLink}`)  //////////////////
       
       const userDto = new UserDto(user);
       const token = tokenService.generateTokens({...userDto})
