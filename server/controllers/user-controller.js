@@ -38,10 +38,11 @@ class UserController {
 
   async activation (req, res, next) {
     try {
-      console.log('dfgdfgdfgdfg')
-      res.json('sfdgfg')
+      const activationLinc = req.params.link
+      await userService.activate(activationLinc)
+      return res.redirect(process.env.CLIENT_URL)
     } catch (error) {
-      
+      console.log(error)
     }
   }
 
