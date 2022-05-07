@@ -38,7 +38,8 @@ class UserController {
 
   async activation (req, res, next) {
     try {
-      
+      console.log('dfgdfgdfgdfg')
+      res.json('sfdgfg')
     } catch (error) {
       
     }
