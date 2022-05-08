@@ -8,7 +8,7 @@ class UserController {
       res.cookie('refreshToken', userData.refreshToken, {maxAge: 30* 24 * 60 * 60 * 1000, httpOnly: true})
       return res.json(userData)
     } catch (error) {
-      console.log(error)
+      next(error)
     }
   }
 
@@ -16,7 +16,7 @@ class UserController {
     try {
       
     } catch (error) {
-      
+      next(error)
     }
   }
 
@@ -24,7 +24,7 @@ class UserController {
     try {
       
     } catch (error) {
-      
+      next(error)
     }
   }
 
@@ -32,7 +32,7 @@ class UserController {
     try {
       
     } catch (error) {
-      
+      next(error)
     }
   }
 
@@ -42,7 +42,7 @@ class UserController {
       await userService.activate(activationLinc)
       return res.redirect(process.env.CLIENT_URL)
     } catch (error) {
-      console.log(error)
+      next(error)
     }
   }
 
@@ -50,7 +50,7 @@ class UserController {
     try {
       res.json(['5641', '682168'])
     } catch (error) {
-      
+      next(error)
     }
   }
 }
