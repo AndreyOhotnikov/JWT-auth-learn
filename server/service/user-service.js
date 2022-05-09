@@ -11,7 +11,7 @@ class UserService {
     async registration (email, password) {
       const candidate = await UserModel.findOne({email})
       if (candidate) {
-        throw ApiError.BadRequest(`Пользователь с таким email: ${email} уже существует`)
+        throw ApiError.badRequest(`Пользователь с таким email: ${email} уже существует`)
       }
 
       const hashPssword = await bcrypt.hash(password, 4);
@@ -30,7 +30,7 @@ class UserService {
     async activate(activationLink) {
       const user = await UserModel.findOne({activationLink})
       if(!user) {
-        throw new ApiError.BadRequest('Некорректная ссылка активации')
+        throw ApiError.badRequest('Некорректная ссылка активации')
       }
       user.isActivated = true;
       await user.save()
@@ -40,18 +40,22 @@ class UserService {
     async login(email, password) {
       const user = await UserModel.findOne({email});
       if (!user) {
-        throw new ApiError.BadRequest('Пользователь с таким email не найден');
+        throw ApiError.badRequest('Пользователь с таким email не найден');
       }
-      console.log('55555555555555555555555555555555555555555555555555555', user.email)
       const isPassEquals = await bcrypt.compare(password, user.password);
       if (!isPassEquals) {
-        throw new ApiError.BadRequest('Неверный пароль');
+        throw ApiError.badRequest('Неверный пароль');
       }
       const userDto = new UserDto(user);
       const token = tokenService.generateTokens({...userDto});
       await tokenService.saveToken(userDto.id, token.refreshToken);
 
       return { ...token, user: userDto }
+    }
+
+    async logout (refreshToken) {
+      const token = await tokenService.removeToken(refreshToken);
+      return token;
     }
 }
 
