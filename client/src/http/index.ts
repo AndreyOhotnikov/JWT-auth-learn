@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const API_URL = `http://localhost:5000`
+export const API_URL = `http://localhost:3001/api`
 
 const $api = axios.create({
   withCredentials: true,
@@ -8,7 +8,7 @@ const $api = axios.create({
 })
 
 $api.interceptors.request.use((config) => {
-  config.headers.Aithorization = `Bearer ${localStorage.getItem('token')}`
+  if(config.headers) config.headers.Aithorization = `Bearer ${localStorage.getItem('token')}`
   return config
 })
 
