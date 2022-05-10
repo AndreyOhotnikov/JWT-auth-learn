@@ -68,7 +68,6 @@ class UserService {
         throw ApiError.unathorizedError();
       }
       const user = await UserModel.findById(userData.id);
-      console.log('+++++++++++++++++++++++++++++++++++++++++++++++++', userData.id)
       const userDto = new UserDto(user);
       const token = tokenService.generateTokens({...userDto});
       await tokenService.saveToken(userDto.id, token.refreshToken);
@@ -78,7 +77,9 @@ class UserService {
 
     async getAllUsers() {
       const users = await UserModel.find();
-      return users
+      const usersDto = users.map(user => new UserDto(user));
+
+      return usersDto
     }
 }
 

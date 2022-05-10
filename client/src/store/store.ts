@@ -8,13 +8,17 @@ import AuthService from "../services/AuthService";
 export default class Store {
   user = {} as IUser;
   isAuth = false;
-  
+  isLoading = false;
   constructor() {
     makeAutoObservable(this)
 
   }
   setAuth(bool: boolean) {
     this.isAuth = bool;
+  }
+
+  setLoding(bool: boolean) {
+    this.isLoading = bool
   }
 
   setUser(user: IUser) {
@@ -62,6 +66,7 @@ export default class Store {
   }
 
   async checkAuth() {
+    this.setLoding(true);
     try {
       const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {withCredentials: true})
       console.log(response)
@@ -71,6 +76,8 @@ export default class Store {
       this.setAuth(true);
     } catch (error) {
       console.log(error)
+    } finally {
+      this.setLoding(false)
     }
   }
 }
