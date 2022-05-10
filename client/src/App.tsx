@@ -32,14 +32,17 @@ function App() {
 
   if(!store.isAuth) {
     return (
+    <>
       <LoginForm/>
-
+     
+    </>
     )
   }
 
   return (
     <div>
       <h1>{store.isAuth ? `auth ${store.user.email}` : 'noAuth'}</h1>
+      <h1>{store.user.isActivated ? `acount activated on ${store.user.email}` : 'acount not activated'}</h1>
       <button onClick={() => store.logout()}>logout</button>
       <div>
         <button onClick={getUsers}>getUsers</button>
