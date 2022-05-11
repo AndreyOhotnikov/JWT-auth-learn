@@ -2,4 +2,4 @@
 #
 #
 ## Cтек клиента: TS, React, MobX, axios
-## Стек Сервера: JS, NodeJS, Mongo, coocie, JWT-token
+## Стек Сервера: JS, NodeJS, Mongo, cookie, JWT-token
